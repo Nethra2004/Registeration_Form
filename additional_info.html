@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Additional Information</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .tooltip {
+            display: none;
+            color: rgb(248, 246, 246);
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        /* Style for the declaration text */
+        .declaration-text {
+            color: white; /* Set text color to white */
+        }
+
+        /* Style for the file chosen text */
+        #file-chosen {
+            color: white; /* Set text color to white */
+        }
+
+        /* Toggle box for signature upload error */
+        .toggle-box {
+            display: none;
+            background-color: rgb(243, 238, 238);
+            color: white;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        /* Error message for signature upload */
+        .signature-error {
+            color: rgb(245, 239, 239);
+            font-size: 12px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Video -->
+    <video class="background-video" autoplay muted loop>
+        <source src="C:\Users\nethr\OneDrive\Desktop\Form\2611250-uhd_3840_2160_30fps.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="form-container" id="additional_info">
+        <h2>Additional Information</h2>
+        <form id="additionalInfoForm" onsubmit="return validateForm()">
+            <label for="interest">Why are you interested in this internship? (Max 250 words)</label>
+            <textarea id="interest" name="interest" required></textarea><br>
+
+            <label for="skills">What skills or experiences make you a strong candidate for this position? (Max 250 words)</label>
+            <textarea id="skills" name="skills" required></textarea><br>
+
+            <label for="experience">Do you have any relevant experience or coursework? If so, please provide details. (Max 250 words)</label>
+            <textarea id="experience" name="experience" required></textarea><br>
+
+            <label for="authorized">Are you legally authorized to work in the country of the internship location?</label>
+            <select id="authorized" name="authorized" required>
+                <option value="" disabled selected>Select an option</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select><br>
+
+            <label>References:</label>
+            <table>
+                <tr>
+                    <th class="name-column">Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                </tr>
+                <tr>
+                    <td class="name-column"><input type="text" id="refName1" name="refName1" required></td>
+                    <td>
+                        <input type="email" id="refEmail1" name="refEmail1" required>
+                        <span class="tooltip" id="emailError1">Email should contain at least one numeric character and one special character.</span>
+                    </td>
+                    <td>
+                        <input type="tel" id="refPhone1" name="refPhone1" pattern="[0-9]{10}" required>
+                        <span class="tooltip" id="phoneError1">Phone number must contain exactly 10 valid digits.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="name-column"><input type="text" id="refName2" name="refName2"></td>
+                    <td>
+                        <input type="email" id="refEmail2" name="refEmail2">
+                        <span class="tooltip" id="emailError2">Email should contain at least one numeric character and one special character.</span>
+                    </td>
+                    <td>
+                        <input type="tel" id="refPhone2" name="refPhone2" pattern="[0-9]{10}">
+                        <span class="tooltip" id="phoneError2">Phone number must contain exactly 10 valid digits.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="name-column"><input type="text" id="refName3" name="refName3"></td>
+                    <td>
+                        <input type="email" id="refEmail3" name="refEmail3">
+                        <span class="tooltip" id="emailError3">Email should contain at least one numeric character and one special character.</span>
+                    </td>
+                    <td>
+                        <input type="tel" id="refPhone3" name="refPhone3" pattern="[0-9]{10}">
+                        <span class="tooltip" id="phoneError3">Phone number must contain exactly 10 valid digits.</span>
+                    </td>
+                </tr>
+            </table>
+
+            <label for="declaration">Declaration:</label>
+            <p class="declaration-text">By submitting this form, I certify that all information provided is accurate and truthful to the best of my knowledge.</p>
+
+            <!-- Custom Signature Upload -->
+            <label for="signatureUpload">Upload Signature:</label>
+            <div class="custom-file-upload">
+                <button type="button" id="uploadSignatureBtn">Upload Signature</button>
+                <input type="file" id="signatureUpload" name="signatureUpload" accept=".png, .jpg, .jpeg" style="display: none;">
+                <span id="file-chosen">No file chosen</span>
+            </div><br>
+
+            <!-- Error message for missing signature upload -->
+            <div class="signature-error" id="signatureError">Upload signature is required.</div>
+
+            <button type="button" class="prev-btn" data-prev="internship_details.html">Previous</button>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            const interest = document.getElementById('interest').value;
+            const skills = document.getElementById('skills').value;
+            const experience = document.getElementById('experience').value;
+            const authorized = document.getElementById('authorized').value;
+            const signatureUpload = document.getElementById('signatureUpload').files.length; // Change here to check length
+            
+            // Updated Email Validation Pattern
+            const emailPattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[^\s@]+@[^\s@]+\.[^\s@]+$/; // At least one numeric and one special character
+            const phonePattern = /^\d{10}$/; // Exactly 10 digits
+            const signatureError = document.getElementById('signatureError');
+
+            // Hide the signature error initially
+            signatureError.style.display = 'none';
+
+            // Validate word limits for text areas
+            if (!validateWordLimit(interest, 250)) {
+                alert("The answer for 'Why are you interested in this internship?' must be within 250 words.");
+                document.getElementById('interest').focus();
+                return false;
+            }
+
+            if (!validateWordLimit(skills, 250)) {
+                alert("The answer for 'What skills or experiences make you a strong candidate for this position?' must be within 250 words.");
+                document.getElementById('skills').focus();
+                return false;
+            }
+
+            if (!validateWordLimit(experience, 250)) {
+                alert("The answer for 'Do you have any relevant experience or coursework?' must be within 250 words.");
+                document.getElementById('experience').focus();
+                return false;
+            }
+
+            // Validate authorization dropdown
+            if (authorized === "") {
+                alert("Please select an option for 'Are you legally authorized to work in the country of the internship location?'.");
+                document.getElementById('authorized').focus();
+                return false;
+            }
+
+            // Validate signature upload
+            if (signatureUpload === 0) { // Check if no file is selected
+                // Show the error message if signature is not uploaded
+                signatureError.style.display = 'block';
+                return false;
+            }
+
+            // Validate references
+            let valid = true;
+            for (let i = 1; i <= 3; i++) {
+                const refEmail = document.getElementById(`refEmail${i}`).value;
+                const refPhone = document.getElementById(`refPhone${i}`).value;
+
+                if (refPhone && (!phonePattern.test(refPhone))) {
+                    document.getElementById(`phoneError${i}`).style.display = 'inline';
+                    document.getElementById(`refPhone${i}`).focus();
+                    valid = false;
+                } else {
+                    document.getElementById(`phoneError${i}`).style.display = 'none';
+                }
+
+                if (refEmail && (!emailPattern.test(refEmail))) {
+                    document.getElementById(`emailError${i}`).style.display = 'inline';
+                    document.getElementById(`refEmail${i}`).focus();
+                    valid = false;
+                } else {
+                    document.getElementById(`emailError${i}`).style.display = 'none';
+                }
+            }
+
+            if (!valid) {
+                return false;
+            }
+
+        // Redirect to the thank you page
+        window.location.href = 'thank_you.html'; // Ensure this path is correct
+            return false; // Prevent default form submission
+        }
+
+        function validateWordLimit(text, maxWords) {
+            const words = text.trim().split(/\s+/);
+            return words.length <= maxWords;
+        }
+
+        // Event listener for signature upload button
+        document.getElementById('uploadSignatureBtn').addEventListener('click', function () {
+            document.getElementById('signatureUpload').click();
+        });
+
+        document.getElementById('signatureUpload').addEventListener('change', function () {
+            const fileName = this.files[0] ? this.files[0].name : 'No file chosen';
+            document.getElementById('file-chosen').textContent = fileName;
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Information</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Video -->
+    <video class="background-video" autoplay muted loop>
+        <source src="C:\Users\nethr\OneDrive\Desktop\Form\2611250-uhd_3840_2160_30fps.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="form-container" id="personal_info">
+        <h2>Personal Information</h2>
+        <form id="personalInfoForm">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required><br>
+
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required><br>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required><br>
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="" disabled selected>Select your gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Prefer not to say">Prefer not to say</option>
+            </select><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="contactNumber">Contact Number:</label>
+            <input type="tel" id="contactNumber" name="contactNumber" pattern="[0-9]{10}" required><br>
+
+            <label for="addressLine1">Address Line 1:</label>
+            <input type="text" id="addressLine1" name="addressLine1" required><br>
+
+            <label for="addressLine2">Address Line 2:</label>
+            <input type="text" id="addressLine2" name="addressLine2"><br>
+
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" required><br>
+
+            <label for="state">State/Province:</label>
+            <input type="text" id="state" name="state" required><br>
+
+            <label for="postalCode">Postal/Zip Code:</label>
+            <input type="text" id="postalCode" name="postalCode" pattern="[0-9]{6}" required><br>
+
+            <button type="button" class="next-btn" onclick="validateForm()">Next</button>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            const form = document.getElementById('personalInfoForm');
+            let isValid = true;
+
+            // Validate First Name
+            const firstName = document.getElementById('firstName');
+            if (!firstName.value.trim()) {
+                alert('First Name is required.');
+                firstName.focus();
+                isValid = false;
+            }
+
+            // Validate Last Name
+            const lastName = document.getElementById('lastName');
+            if (!lastName.value.trim()) {
+                alert('Last Name is required.');
+                lastName.focus();
+                isValid = false;
+            }
+
+            // Validate Date of Birth (DOB) - Age must be above 19 years
+            const dob = document.getElementById('dob');
+            if (!dob.value) {
+                alert('Date of Birth is required.');
+                dob.focus();
+                isValid = false;
+            } else {
+                const dobDate = new Date(dob.value);
+                const today = new Date();
+                let age = today.getFullYear() - dobDate.getFullYear();
+                const monthDiff = today.getMonth() - dobDate.getMonth();
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dobDate.getDate())) {
+                    age--;
+                }
+                if (age < 19) {
+                    alert('Age must be above 19 years.');
+                    dob.focus();
+                    isValid = false;
+                }
+            }
+
+            // Validate Gender
+            const gender = document.getElementById('gender');
+            if (!gender.value) {
+                alert('Gender selection is required.');
+                gender.focus();
+                isValid = false;
+            }
+
+            // Validate Email - Must contain special characters and numeric values
+            const email = document.getElementById('email');
+            const emailPattern = /^(?=.*\d)(?=.*[!@#$%^&*])[^\s@]+@[^\s@]+\.[^\s@]+$/; // Updated regex pattern
+            if (!email.value.trim() || !emailPattern.test(email.value)) {
+                alert('Email must contain at least one numeric value and one special character.');
+                email.focus();
+                isValid = false;
+            } 
+
+            // Validate Contact Number
+            const contactNumber = document.getElementById('contactNumber');
+            if (!contactNumber.value.trim() || !/^\d{10}$/.test(contactNumber.value)) {
+                alert('Valid 10-digit Contact Number is required.');
+                contactNumber.focus();
+                isValid = false;
+            }
+
+            // Validate Address Line 1
+            const addressLine1 = document.getElementById('addressLine1');
+            if (!addressLine1.value.trim()) {
+                alert('Address Line 1 is required.');
+                addressLine1.focus();
+                isValid = false;
+            }
+
+            // Validate City
+            const city = document.getElementById('city');
+            if (!city.value.trim()) {
+                alert('City is required.');
+                city.focus();
+                isValid = false;
+            }
+
+            // Validate State/Province
+            const state = document.getElementById('state');
+            if (!state.value.trim()) {
+                alert('State/Province is required.');
+                state.focus();
+                isValid = false;
+            }
+
+            // Validate Postal/Zip Code
+            const postalCode = document.getElementById('postalCode');
+            if (!postalCode.value.trim() || !/^\d{6}$/.test(postalCode.value)) {
+                alert('Valid 6-digit Postal/Zip Code is required.');
+                postalCode.focus();
+                isValid = false;
+            }
+
+            // If all fields are valid, proceed to the next step
+            if (isValid) {
+                window.location.href = "education_info.html";
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education Information</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Video -->
+    <video class="background-video" autoplay muted loop>
+        <source src="C:\Users\nethr\OneDrive\Desktop\Form\2611250-uhd_3840_2160_30fps.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="form-container" id="education_info">
+        <h2>Education Information</h2>
+        <form id="educationInfoForm">
+            <label for="schoolName">School Name:</label>
+            <input type="text" id="schoolName" name="schoolName" required><br>
+
+            <label for="marks10th">10th Marks (%):</label>
+            <input type="number" id="marks10th" name="marks10th" min="0" max="100" required><br>
+
+            <label for="marks12th">12th Marks (%):</label>
+            <input type="number" id="marks12th" name="marks12th" min="0" max="100" required><br>
+
+            <label for="universityName">University/College Name:</label>
+            <input type="text" id="universityName" name="universityName" required><br>
+
+            <!-- Degree Dropdown -->
+            <label for="degree">Degree:</label>
+            <select id="degree" name="degree" required>
+                <option value="" disabled selected>Select your degree</option>
+                <option value="B.Tech">B.Tech</option>
+                <option value="B.E">B.E</option>
+                <option value="B.Sc">B.Sc</option>
+            </select><br>
+
+            <!-- Department Dropdown -->
+            <label for="department">Department:</label>
+            <select id="department" name="department" required>
+                <option value="" disabled selected>Select your department</option>
+                <option value="Artificial Intelligence and Data Science">Artificial Intelligence and Data Science</option>
+                <option value="Artificial Intelligence and Machine Learning">Artificial Intelligence and Machine Learning</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="CyberSecurity">CyberSecurity</option>
+                <option value="Electronics and Communication">Electronics and Communication</option>
+                <option value="Information Technology">Information Technology</option>
+            </select><br>
+
+            <label for="gradDate">Expected Graduation Date:</label>
+            <input type="date" id="gradDate" name="gradDate" required><br>
+
+            <label for="cgpa">CGPA:</label>
+            <input type="number" id="cgpa" name="cgpa" step="0.01" min="0" max="10" required><br>
+
+            <label for="workExperience">Add Work Experience (if applicable):</label>
+            <textarea id="workExperience" name="workExperience" oninput="checkWordLimit()" rows="5" maxlength="250"></textarea><br>
+            <small id="wordCount">0 / 250 words</small><br>
+
+            <button type="button" class="prev-btn" onclick="goToPage('personal_info.html')">Previous</button>
+            <button type="button" class="next-btn" onclick="validateEducationForm()">Next</button>
+        </form>
+    </div>
+
+    <script>
+        function validateEducationForm() {
+            let isValid = true;
+            
+            // Validate 10th Marks
+            const marks10th = document.getElementById('marks10th').value;
+            if (marks10th === '' || marks10th < 0 || marks10th > 100) {
+                alert('Please enter a valid 10th Marks percentage between 0 and 100.');
+                document.getElementById('marks10th').focus();
+                isValid = false;
+            }
+
+            // Validate 12th Marks
+            const marks12th = document.getElementById('marks12th').value;
+            if (marks12th === '' || marks12th < 0 || marks12th > 100) {
+                alert('Please enter a valid 12th Marks percentage between 0 and 100.');
+                document.getElementById('marks12th').focus();
+                isValid = false;
+            }
+
+            // Validate CGPA
+            const cgpa = document.getElementById('cgpa').value;
+            if (cgpa === '' || cgpa < 0 || cgpa > 10) {
+                alert('Please enter a valid CGPA between 0 and 10.');
+                document.getElementById('cgpa').focus();
+                isValid = false;
+            }
+
+            // Validate Expected Graduation Date
+            const gradDate = document.getElementById('gradDate').value;
+            const gradYear = new Date(gradDate).getFullYear();
+            if (gradYear < 2024 || gradYear > 2027) {
+                alert('Please select an Expected Graduation Date between the years 2024 and 2027.');
+                document.getElementById('gradDate').focus();
+                isValid = false;
+            }
+
+            // If all validations pass, proceed to the next page
+            if (isValid) {
+                window.location.href = 'internship_details.html';
+            }
+        }
+
+        function checkWordLimit() {
+            const textarea = document.getElementById('workExperience');
+            const wordCountElement = document.getElementById('wordCount');
+            const text = textarea.value.trim();
+            const words = text.split(/\s+/).filter(function(word) {
+                return word.length > 0;
+            });
+            const wordCount = words.length;
+            wordCountElement.textContent = wordCount + ' / 250 words';
+
+            if (wordCount > 250) {
+                alert('Word limit exceeded. Please keep your work experience description within 250 words.');
+                textarea.value = words.slice(0, 250).join(' ');
+            }
+        }
+
+        function goToPage(page) {
+            window.location.href = page;
+        }
+    </script>
+</body>
+</html>
+

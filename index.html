@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winter Internship 2024</title>
+    <style>
+           body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f1eeee; /* Fallback color for browsers that don't support videos */
+            color: #fff; /* White text color for better contrast */
+            overflow: hidden; /* Prevent scrolling when video is playing */
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures video covers the entire background */
+            z-index: -1; /* Places the video behind all other elements */
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* Use full height of the viewport */
+            padding: 20px;
+            position: relative; /* Ensure other elements are positioned above the video */
+            z-index: 1; /* Places the content above the video */
+            text-align: center; /* Center-align text */
+        }
+
+        .login-container, .content-container {
+            max-width: 500px; /* Center container to 500px width */
+            margin: 20px;
+            color: #f3eeee; /* Dark text for contrast */
+        }
+
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .content-container {
+            display: none; /* Show only after login */
+            animation: fadeIn 1.5s ease-out; /* Animation for fading in the content */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px); /* Slide up effect */
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-container {
+            margin-top: 20px;
+            color: #f3f2f2; /* Black text color for better contrast */
+        }
+
+        .form-container h2 {
+            margin-bottom: 20px;
+            color: #f7f3f3; /* Darker heading color */
+        }
+
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-container input {
+            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        .form-container button {
+            padding: 12px 24px;
+            background-color: #8384d2; /* Blue button color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #050e87; /* Darker blue on hover */
+        }
+
+        .company-info {
+            margin: 20px 0;
+            animation: slideIn 1.5s ease-out, pulse 3s infinite; /* Animation for sliding in and pulsing */
+            text-align: center; /* Center-align text */
+        }
+
+        .company-info h2 {
+            margin-bottom: 15px;
+            font-size: 28px;
+            color: #ffffff; /* White color for the heading */
+            text-transform: uppercase; /* Uppercase for heading */
+            letter-spacing: 1px; /* Letter spacing for heading */
+        }
+
+        .company-info p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #e0e0e0; /* Light grey color for the paragraph text */
+            font-weight: bold; /* Bold text for the company info */
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05); /* Slightly enlarge */
+            }
+        }
+
+        .apply-button {
+            padding: 12px 24px;
+            background-color: #8384d2; /* Blue button color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Added transition for transform */
+            margin-top: 20px; /* Space above button */
+        }
+
+        .apply-button:hover {
+            background-color: #050e87; /* Darker blue on hover */
+            transform: scale(1.05); /* Slightly increase size on hover */
+        }
+
+        .apply-button:active {
+            transform: scale(0.95); /* Slightly decrease size when clicked */
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Video -->
+    <video class="video-background" autoplay loop muted>
+        <source src="C:\Users\nethr\OneDrive\Desktop\Form\12352337-hd_1920_1080_60fps.mp4.crdownload" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="container">
+        <!-- Login Form -->
+        <div class="login-container" id="login-container">
+            <div class="form-container">
+                <h2>Login</h2>
+                <form id="login-form">
+                    <input type="text" id="username" placeholder="Username" required>
+                    <input type="password" id="password" placeholder="Password" required>
+                    <button type="button" onclick="handleLogin()">Sign In</button>
+                </form>
+                <p>New user? <button onclick="toggleForms()">Create an Account</button></p>
+                <form id="signup-form" style="display: none;">
+                    <h2>Create Account</h2>
+                    <input type="text" id="new-username" placeholder="Username" required>
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="password" id="new-password" placeholder="Password" required>
+                    <button type="button" onclick="handleSignup()">Sign Up</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Company Info Section -->
+        <div class="content-container" id="content-container">
+            <h1>Winter Internship 2024</h1>
+            <section class="company-info">
+                <h2>About NexGen Software Solutions</h2>
+                <p><strong>NexGen Software Solutions is a leading tech firm dedicated to delivering innovative software development, cloud computing, and AI-driven solutions. We specialize in creating custom software tailored to your business needs, leveraging cloud technologies for scalability and efficiency, and utilizing advanced data analytics to provide actionable insights. Our mission is to drive digital transformation and enhance your business's capabilities.</strong></p>
+            </section>
+            <section class="internship-info">
+                <button onclick="window.location.href='personal_info.html'" class="apply-button">Apply Now</button>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Simulate a database for demo purposes
+        const users = {
+            "user1": "password1",
+            "user2": "password2"
+        };
+
+        // Show the login form and hide the content initially
+        document.getElementById('login-container').style.display = 'flex';
+        document.getElementById('content-container').style.display = 'none';
+
+        function handleLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username && password) {
+                if (users[username] && users[username] === password) {
+                    // Login successful
+                    document.getElementById('login-container').style.display = 'none';
+                    document.getElementById('content-container').style.display = 'block';
+                } else {
+                    // Invalid user
+                    alert('Invalid username or password. Please try again or create an account.');
+                }
+            } else {
+                alert('Please enter both username and password.');
+            }
+        }
+
+        function handleSignup() {
+            const newUsername = document.getElementById('new-username').value;
+            const email = document.getElementById('email').value;
+            const newPassword = document.getElementById('new-password').value;
+
+            // Email must contain at least one special character and one numeric value
+            const emailPattern = /^(?=.*[0-9])(?=.*[!@#$%^&*])[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            // Password must be strong (at least one uppercase letter, one lowercase letter, one digit, and one special character)
+            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+
+            if (!emailPattern.test(email)) {
+                alert('Email must contain at least one special character and one numeric value.');
+                return;
+            }
+
+            if (!passwordPattern.test(newPassword)) {
+                alert('Password must be strong (at least 8 characters, including one uppercase letter, one lowercase letter, one digit, and one special character).');
+                return;
+            }
+
+            if (newUsername && email && newPassword) {
+                if (users[newUsername]) {
+                    alert('User already exists. Please log in.');
+                } else {
+                    users[newUsername] = newPassword;
+                    alert('Account created successfully! You can now log in.');
+                    toggleForms(); // Go back to login form after signup
+                }
+            } else {
+                alert('Please fill in all fields.');
+            }
+        }
+
+        function toggleForms() {
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+            const isLoginVisible = loginForm.style.display !== 'none';
+
+            if (isLoginVisible) {
+                loginForm.style.display = 'none';
+                signupForm.style.display = 'block';
+            } else {
+                loginForm.style.display = 'block';
+                signupForm.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+

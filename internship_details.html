@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Inline CSS for demonstration */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .background-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+        }
+
+        /* Remove the form container styling */
+        .form-container {
+            max-width: 600px;
+            margin: 5% auto;
+            padding: 0; /* Remove padding for no box effect */
+            background-color: transparent; /* Make background transparent */
+            box-shadow: none; /* Remove shadow */
+            border-radius: 0; /* Remove border radius */
+        }
+
+        h2 {
+            text-align: center;
+            color: #f9f6f6;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input, select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .file-upload-container {
+            margin-bottom: 15px;
+        }
+
+        .file-input-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff; /* White background for the file input box */
+            padding: 10px;
+            color: #333; /* Default text color */
+        }
+
+        .file-input-box input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-input-box::before {
+            content: 'Choose File';
+            position: absolute;
+            left: 10px;
+            background-color: black; /* Black background for the button */
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            pointer-events: none; /* Makes sure the button is unclickable */
+        }
+
+        .file-input-box span {
+            pointer-events: none;
+            margin-left: 120px; /* Adjust the spacing so text doesn't overlap the button */
+            color: black; /* Black text color for 'No file chosen' */
+        }
+
+        .prev-btn, .next-btn {
+            padding: 10px 20px;
+            background-color: #8384d2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .prev-btn:hover, .next-btn:hover {
+            background-color: #050e87;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Video -->
+    <video class="background-video" autoplay muted loop>
+        <source src="C:\Users\nethr\OneDrive\Desktop\Form\2611250-uhd_3840_2160_30fps.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Internship Details Form without box -->
+    <div class="form-container" id="internship_details">
+        <h2>Internship Details</h2>
+        <form id="internshipDetailsForm">
+            <!-- Dropdown Menu for Internship Position -->
+            <label for="position">Internship Position Applied For:</label><br>
+            <select id="position" name="position" required>
+                <option value="" disabled selected>Select a position</option>
+                <option value="Software Development Intern">Software Development Intern</option>
+                <option value="Cloud Computing Intern">Cloud Computing Intern</option>
+                <option value="AI & Data Analytics Intern">AI & Data Analytics Intern</option>
+                <option value="Cybersecurity Intern">Cybersecurity Intern</option>
+                <option value="Technical Support Intern">Technical Support Intern</option>
+                <option value="Business Analysis Intern">Business Analysis Intern</option>
+            </select><br>
+
+            <label for="startDate">Preferred Start Date:</label>
+            <input type="date" id="startDate" name="startDate" required min="2024-10-01" max="2024-12-31"><br>
+
+            <label for="duration">Duration of Internship (in weeks):</label>
+            <input type="number" id="duration" name="duration" required min="1" max="12"><br>
+
+            <label for="availability">Availability:</label>
+            <select id="availability" name="availability" required>
+                <option value="" disabled selected>Select Availability</option>
+                <option value="Full-Time">Full-Time</option>
+                <option value="Part-Time">Part-Time</option>
+            </select><br>
+
+            <!-- Upload Cover Letter -->
+            <div class="file-upload-container">
+                <label for="coverLetter">Upload Cover Letter:</label>
+                <div class="file-input-box">
+                    <input type="file" id="coverLetter" name="coverLetter" required onchange="displayFileName('coverLetter')">
+                    <span id="coverLetterName">No file chosen</span>
+                </div>
+            </div>
+
+            <!-- Upload Resume -->
+            <div class="file-upload-container">
+                <label for="resume">Upload Resume/CV:</label>
+                <div class="file-input-box">
+                    <input type="file" id="resume" name="resume" required onchange="displayFileName('resume')">
+                    <span id="resumeName">No file chosen</span>
+                </div>
+            </div>
+
+            <button type="button" class="prev-btn" data-prev="education_info.html">Previous</button>
+            <button type="button" class="next-btn" data-next="additional_info.html" onclick="validateForm()">Next</button>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Function to display the selected file name
+        function displayFileName(inputId) {
+            const input = document.getElementById(inputId);
+            const fileName = input.files[0] ? input.files[0].name : 'No file chosen';
+            const fileNameSpan = document.getElementById(inputId + 'Name');
+            fileNameSpan.textContent = fileName;
+
+            // Change the color of the text to black regardless of whether a file is chosen
+            fileNameSpan.style.color = 'black';
+        }
+
+        function validateForm() {
+            const startDateInput = document.getElementById('startDate').value;
+            const startDate = new Date(startDateInput);
+            const duration = parseInt(document.getElementById('duration').value);
+            const availability = document.getElementById('availability').value;
+            const coverLetter = document.getElementById('coverLetter').files.length;
+            const resume = document.getElementById('resume').files.length;
+
+            const minDate = new Date('2024-10-01'); // October 1, 2024
+            const maxDate = new Date('2024-12-31'); // December 31, 2024
+
+            // Check if start date is within the required range
+            if (startDate < minDate || startDate > maxDate) {
+                alert('Preferred Start Date must be between October 2024 and December 2024.');
+                return false;
+            }
+
+            if (duration < 1 || duration > 12) {
+                alert('Duration of Internship must be between 1 and 12 weeks.');
+                return false;
+            }
+
+            if (!availability) {
+                alert('Please select your availability (Full-Time or Part-Time).');
+                return false;
+            }
+
+            if (coverLetter === 0) {
+                alert('Please upload your cover letter.');
+                return false;
+            }
+
+            if (resume === 0) {
+                alert('Please upload your resume/CV.');
+                return false;
+            }
+
+            // If validation passes
+            window.location.href = document.querySelector('.next-btn').getAttribute('data-next');
+        }
+    </script>
+</body>
+</html>
+
+
+

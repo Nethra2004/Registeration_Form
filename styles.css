@@ -1,0 +1,150 @@
+/* General styles for all pages */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    position: relative; /* Ensure proper positioning for the background video */
+    overflow: auto; /* Allow scrolling if content overflows */
+}
+
+/* Full-screen background video */
+.background-video {
+    position: fixed; /* Use fixed positioning to cover the viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure video covers the whole screen */
+    z-index: -1; /* Send the video behind the content */
+}
+
+/* Container styles */
+.form-container, .thank-you-container {
+    padding: 30px;
+    max-width: 500px;
+    width: 100%;
+    margin: 20px;
+    text-align: center;
+    position: relative; /* Ensure content is on top of the video */
+    z-index: 1; /* Ensure form content is above the video */
+    /* Removed background-color, border-radius, and box-shadow for no box effect */
+}
+
+/* Styling for headings */
+h2 {
+    color: #faf8f8;
+    margin-bottom: 20px;
+}
+
+/* Styling for form labels and inputs */
+form label {
+    display: block;
+    margin-bottom: 5px;
+    text-align: left;
+    color: #fffefe;
+}
+
+form input, form select, form textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Style for radio buttons and checkboxes */
+form input[type="radio"], form input[type="checkbox"] {
+    width: auto;
+    margin: 0 5px 0 0;
+}
+
+/* Button styles */
+button {
+    background-color: #8384d2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #050e87;
+}
+
+.next-btn, .prev-btn {
+    width: 45%;
+    margin: 5px;
+}
+
+.submit-btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Style for table in additional information */
+table {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* Style for thank you page */
+.thank-you-container {
+    text-align: center;
+}
+
+.thank-you-container h2 {
+    margin-bottom: 15px;
+    color: #f0f5f1;
+}
+
+.thank-you-container p {
+    color: #faf9f9;
+    font-size: 16px;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 600px) {
+    .form-container, .thank-you-container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    form input, form select, form textarea, button {
+        width: calc(100% - 20px);
+    }
+
+    .next-btn, .prev-btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
